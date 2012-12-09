@@ -48,4 +48,8 @@
              <version>1.7.7</version>
              </dependency>
       </dependencies>
+    <ciManagement>
+    	<system>Jenkins</system>
+    	<url>http://jenkins.yukarin.mydns.jp/job/ItemTradeChest/</url>
+    </ciManagement>
 </project>
