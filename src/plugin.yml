@@ -1,0 +1,4 @@
+name: ItemTradeChest
+main: jp.tsuttsu305.ItemTradeChest.ItemTradeChest
+version: 1.0.0
+softdepend: [Lockette]
