@@ -21,6 +21,8 @@
         <configuration>
           <source/>
           <target/>
+          <file>src/plugin.yml</file>
+          <!--  <file>src/config.yml</file>-->
         </configuration>
       </plugin>
     </plugins>
@@ -40,5 +42,10 @@
             <!-- Bukkit API Version, change if nessesary -->
             <version>1.4.2-R0.3-SNAPSHOT</version>
         </dependency>
-    </dependencies>
+         <dependency>
+            <groupId>org.yi.acru.bukkit.Lockette.Lockette</groupId>
+             <artifactId>Lockette</artifactId>
+             <version>1.7.7</version>
+             </dependency>
+      </dependencies>
 </project>

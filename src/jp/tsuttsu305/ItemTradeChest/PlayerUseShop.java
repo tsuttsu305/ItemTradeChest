@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 public class PlayerUseShop implements Listener {
 	private ItemTradeChest ttc = null;
@@ -22,6 +21,7 @@ public class PlayerUseShop implements Listener {
 		this.ttc = ttc;
 	}
 
+	@SuppressWarnings("unused")
 	@EventHandler
 	public void signClick(PlayerInteractEvent event){
 		//判定で使う変数
