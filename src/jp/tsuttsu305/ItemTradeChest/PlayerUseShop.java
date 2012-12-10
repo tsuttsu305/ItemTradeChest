@@ -1,5 +1,7 @@
 package jp.tsuttsu305.ItemTradeChest;
 
+import jp.tsuttsu305.InvChk.ChestChk;
+import jp.tsuttsu305.InvChk.PlayerInvChk;
 import jp.tsuttsu305.Lockette.CheckLockette;
 
 import org.bukkit.ChatColor;
@@ -24,7 +26,7 @@ public class PlayerUseShop implements Listener {
 
 	@EventHandler
 	public void signClick(PlayerInteractEvent event){
-		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
+		if (!(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))return;
 			
 		//クリックしたのが壁の看板以外なら終了
 		if ((event.getClickedBlock().getType().equals(Material.WALL_SIGN)) == false){
@@ -40,7 +42,7 @@ public class PlayerUseShop implements Listener {
 		if (!chest.getType().equals(Material.CHEST)) return;
 
 		//1行めが[shop]以外は無視
-		if (!signLines[0].equalsIgnoreCase("[shop]")) return;
+		if (!(signLines[0].equalsIgnoreCase("[shop]"))) return;
 		Player player = event.getPlayer();
 		//Shop作成者が本当にチェスト持ち主かを再確認
 		if (ItemTradeChest.Lockette){
@@ -68,10 +70,17 @@ public class PlayerUseShop implements Listener {
 			ItemStack outItem = getItemStack(signLines[2]);
 			ItemStack inItem = getItemStack(signLines[3]);
 			if (outItem == null || inItem == null)return;
-			//チェストの中身を配列に格納
-			//ItemStack[] chestItem = ((Chest)chest.getState()).getBlockInventory().getContents();
-			//int chestMax = ((Chest)chest.getState()).getBlockInventory().getSize();
+			//チェストの中身チェック
+			if (ChestChk.countChestItem(chest, outItem) < outItem.getAmount()){
+				player.sendMessage("[Shop] This shop is out of stock! XD");
+				return;
+			}
 			
+			//PlayerのInventoryチェック
+			if (PlayerInvChk.countPlayerInvItem(player, inItem) < inItem.getAmount()){
+				player.sendMessage("[Shop] You do not have the required items. :(");
+				return;
+			}
 		}
 	}
 	
