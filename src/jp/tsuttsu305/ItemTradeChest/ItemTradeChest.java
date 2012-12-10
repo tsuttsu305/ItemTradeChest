@@ -12,6 +12,7 @@ public class ItemTradeChest extends JavaPlugin {
 	public void onEnable(){
 		getServer().getPluginManager().registerEvents(new ShopCreate(), this);
 		getServer().getPluginManager().registerEvents(new PlayerUseShop(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerBlockPlaceEvent(), this);
 		if (getServer().getPluginManager().isPluginEnabled("Lockette")){
 			Lockette = true;
 			logger.info("[ItemTradeChest] Hooked Lockette");

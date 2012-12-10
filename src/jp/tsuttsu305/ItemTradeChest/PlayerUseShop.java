@@ -6,10 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,8 +24,10 @@ public class PlayerUseShop implements Listener {
 
 	@EventHandler
 	public void signClick(PlayerInteractEvent event){
+		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
+			
 		//クリックしたのが壁の看板以外なら終了
-		if (!(event.getClickedBlock().getType() == Material.WALL_SIGN)){
+		if ((event.getClickedBlock().getType().equals(Material.WALL_SIGN)) == false){
 			return;
 		}
 		//看板の内容格納
@@ -69,8 +69,8 @@ public class PlayerUseShop implements Listener {
 			ItemStack inItem = getItemStack(signLines[3]);
 			if (outItem == null || inItem == null)return;
 			//チェストの中身を配列に格納
-			ItemStack[] chestItem = ((Chest)chest.getState()).getBlockInventory().getContents();
-			int chestMax = ((Chest)chest.getState()).getBlockInventory().getSize();
+			//ItemStack[] chestItem = ((Chest)chest.getState()).getBlockInventory().getContents();
+			//int chestMax = ((Chest)chest.getState()).getBlockInventory().getSize();
 			
 		}
 	}
