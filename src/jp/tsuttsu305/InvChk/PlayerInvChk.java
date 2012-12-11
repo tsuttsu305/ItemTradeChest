@@ -26,4 +26,39 @@ public class PlayerInvChk {
 		}
 		return invAu;
 	}
+	
+	//Playerがアイテムを追加できるか
+	public static boolean playerCanAdd(Player pl, ItemStack item){
+		if (pl == null || item == null)return false;
+		int maxStack = item.getMaxStackSize();
+		Material ma = item.getType();
+		short du = item.getDurability();
+		
+		//PlayerのInventoryの中身取得
+		ItemStack[] playerInv = pl.getInventory().getContents();
+		
+		int canAdd = 0;
+		//確認開始
+		for (int i = 0;i < playerInv.length;i++){
+			if (playerInv[i] == null) {
+				canAdd = canAdd + 64;
+				continue;
+			}
+			
+			if (playerInv[i].getType().equals(ma)){
+				if (playerInv[i].getDurability() == du){
+					if (playerInv[i].getAmount() == maxStack){
+						continue;
+					}else{
+						canAdd = playerInv[i].getMaxStackSize() - playerInv[i].getAmount();
+					}
+				}
+			}
+		}
+		
+		if (canAdd >= item.getAmount()){
+			return true;
+		}
+		return false;
+	}
 }

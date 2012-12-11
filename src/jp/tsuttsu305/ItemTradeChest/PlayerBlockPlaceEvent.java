@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class PlayerBlockPlaceEvent implements Listener {
 	
-	@EventHandler(priority=EventPriority.HIGH)
+	@EventHandler(priority=EventPriority.NORMAL)
 	public void onPlayerBlockPlace(BlockPlaceEvent event){
 		Block block = event.getBlockAgainst();
 		if (block.getType().equals(Material.WALL_SIGN)){

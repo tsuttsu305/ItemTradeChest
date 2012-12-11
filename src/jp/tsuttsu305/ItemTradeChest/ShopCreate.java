@@ -37,7 +37,7 @@ public class ShopCreate implements Listener {
 		if (ItemTradeChest.Lockette){
 			if (CheckLockette.isCheckBlock(chest, player) == false){
 				event.setLine(0, ChatColor.RED + "" +  ChatColor.ITALIC + "--Error!--");
-				player.sendMessage(ChatColor.RED + "You cannot create shop with others chest :(");
+				player.sendMessage(ChatColor.RED + "[Shop]他人のチェストをShopにすることはできません!");
 				return;
 			}
 		}
@@ -70,7 +70,7 @@ public class ShopCreate implements Listener {
 			try {
 				outName = Material.getMaterial(Integer.parseInt(line[0])).toString();
 			} catch (Exception e) {
-				pl.sendMessage(ChatColor.RED + "Item ID does not exist");
+				pl.sendMessage(ChatColor.RED + "[Shop] そのアイテムIDは存在しません!");
 				outName = "Error";
 			}
 			if (lines[lineN].matches("[0-9]+:[0-9]+")){
@@ -81,7 +81,7 @@ public class ShopCreate implements Listener {
 				lines[lineN] = ChatColor.RED + "" +  ChatColor.ITALIC + "--Error!--";
 			}
 		}else if(lines[lineN].equalsIgnoreCase("none")){
-			lines[lineN] =  ios + ":None";
+			lines[lineN] =  ios + ":NONE:0";
 		}else {
 			lines[lineN] =  ChatColor.RED + "" +  ChatColor.ITALIC + "--Error!--";
 		}
