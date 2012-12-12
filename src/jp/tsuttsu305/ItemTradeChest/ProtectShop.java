@@ -23,33 +23,15 @@ public class ProtectShop implements Listener {
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onExplode(EntityExplodeEvent event){
 		for (Block block : event.blockList()){
-			if (block.getType().equals(Material.WALL_SIGN)){
-				String[] lines = ((Sign)block.getState()).getLines();
-				if (lines[0].equalsIgnoreCase("[shop]")){
-					if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-						if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-							event.setCancelled(true);
-							break;
-						}
-					}
-				}
+			if (isProtectSign(block)){
+				event.setCancelled(true);
+				return;
 			}
-			Block[] blockArea = {
-					block.getRelative(BlockFace.NORTH),
-					block.getRelative(BlockFace.EAST),
-					block.getRelative(BlockFace.SOUTH),
-					block.getRelative(BlockFace.WEST)};
+			Block[] blockArea = getBlockArea(block);
 			for (int i =0; i <= 3;i++){
-				if (blockArea[i].getType().equals(Material.WALL_SIGN)){
-					String[] lines = ((Sign)blockArea[i].getState()).getLines();
-					if (lines[0].equalsIgnoreCase("[shop]")){
-						if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-							if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-								event.setCancelled(true);
-								break;
-							}
-						}
-					}
+				if (isProtectSign(blockArea[i])){
+					event.setCancelled(true);
+					break;
 				}
 			}
 		}
@@ -58,107 +40,79 @@ public class ProtectShop implements Listener {
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerBreak(BlockBreakEvent event){
 		Block block = event.getBlock();
-		if (block.getType().equals(Material.WALL_SIGN)){
-			String[] lines = ((Sign)block.getState()).getLines();
-			if (lines[0].equalsIgnoreCase("[shop]")){
-				if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-					if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-						if (!(event.getPlayer().equals(itc.getServer().getPlayer(lines[1])))){
-							event.setCancelled(true);
-						}
+		if (isProtectSign(block)){
+			if (!(event.getPlayer().equals(itc.getServer().getPlayer(((Sign)block.getState()).getLine(1))))){
+				event.setCancelled(true);
+				return;
+			}
+		}
+		//((Sign)block.getState()).getLine(1)
+		Block[] blockArea = getBlockArea(block);
+		for (int i =0; i <= 3;i++){
+			if (isProtectSign(blockArea[i])){
+				if (!(event.getPlayer().equals(itc.getServer().getPlayer(((Sign)block.getState()).getLine(1))))){
+					event.setCancelled(true);
+					break;
+				}
+			}
+		}
+	}
+		@EventHandler(priority=EventPriority.HIGHEST)
+		public void onPistonEx(BlockPistonExtendEvent event){
+			for (Block block : event.getBlocks()){
+				Block[] blockArea = getBlockArea(block);
+				for (int i =0; i <= 3;i++){
+					if (isProtectSign(blockArea[i])){
+						event.setCancelled(true);
+						break;
 					}
+				}
+			}
+		}
+		@EventHandler(priority=EventPriority.HIGHEST)
+		public void onPistonEx(BlockPistonRetractEvent event){
+			Block block = event.getRetractLocation().getBlock();
+			Block[] blockArea = getBlockArea(block);
+			for (int i =0; i <= 3;i++){
+				if (isProtectSign(blockArea[i])){
+					event.setCancelled(true);
+					break;
 				}
 			}
 		}
 
-		Block[] blockArea = {
-				block.getRelative(BlockFace.NORTH),
-				block.getRelative(BlockFace.EAST),
-				block.getRelative(BlockFace.SOUTH),
-				block.getRelative(BlockFace.WEST)};
-		for (int i =0; i <= 3;i++){
-			if (blockArea[i].getType().equals(Material.WALL_SIGN)){
-				String[] lines = ((Sign)blockArea[i].getState()).getLines();
+		@EventHandler(priority=EventPriority.HIGHEST)
+		public void onPistonEx(BlockBurnEvent event){
+			Block block = event.getBlock();
+			Block[] blockArea = getBlockArea(block);
+			for (int i =0; i <= 3;i++){
+				if (isProtectSign(blockArea[i])){
+					event.setCancelled(true);
+					break;
+				}
+			}
+		}
+
+		public boolean isProtectSign(Block block){
+			if (block.getType().equals(Material.WALL_SIGN)){
+				String[] lines = ((Sign)block.getState()).getLines();
 				if (lines[0].equalsIgnoreCase("[shop]")){
 					if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
 						if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-							if (!(event.getPlayer().equals(itc.getServer().getPlayer(lines[1])))){
-								event.setCancelled(true);
-								break;
-							}
+							return true;
 						}
 					}
 				}
 			}
+			return false;
+		}
+
+		public Block[] getBlockArea(Block block){
+			Block[] blockA = {
+					block.getRelative(BlockFace.NORTH),
+					block.getRelative(BlockFace.EAST),
+					block.getRelative(BlockFace.SOUTH),
+					block.getRelative(BlockFace.WEST)};
+			return blockA;
 		}
 	}
-	
-	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onPistonEx(BlockPistonExtendEvent event){
-		for (Block block : event.getBlocks()){
-			Block[] blockArea = {
-					block.getRelative(BlockFace.NORTH),
-					block.getRelative(BlockFace.EAST),
-					block.getRelative(BlockFace.SOUTH),
-					block.getRelative(BlockFace.WEST)};
-			for (int i =0; i <= 3;i++){
-				if (blockArea[i].getType().equals(Material.WALL_SIGN)){
-					String[] lines = ((Sign)blockArea[i].getState()).getLines();
-					if (lines[0].equalsIgnoreCase("[shop]")){
-						if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-							if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-								event.setCancelled(true);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onPistonEx(BlockPistonRetractEvent event){
-		Block block = event.getRetractLocation().getBlock();
-			Block[] blockArea = {
-					block.getRelative(BlockFace.NORTH),
-					block.getRelative(BlockFace.EAST),
-					block.getRelative(BlockFace.SOUTH),
-					block.getRelative(BlockFace.WEST)};
-			for (int i =0; i <= 3;i++){
-				if (blockArea[i].getType().equals(Material.WALL_SIGN)){
-					String[] lines = ((Sign)blockArea[i].getState()).getLines();
-					if (lines[0].equalsIgnoreCase("[shop]")){
-						if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-							if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-								event.setCancelled(true);
-								break;
-							}
-						}
-					}
-				}
-			}
-	}
-	
-	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onPistonEx(BlockBurnEvent event){
-		Block block = event.getBlock();
-			Block[] blockArea = {
-					block.getRelative(BlockFace.NORTH),
-					block.getRelative(BlockFace.EAST),
-					block.getRelative(BlockFace.SOUTH),
-					block.getRelative(BlockFace.WEST)};
-			for (int i =0; i <= 3;i++){
-				if (blockArea[i].getType().equals(Material.WALL_SIGN)){
-					String[] lines = ((Sign)blockArea[i].getState()).getLines();
-					if (lines[0].equalsIgnoreCase("[shop]")){
-						if (lines[2].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[2].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-							if (lines[3].matches("(out:|in:)[A-Z]+:[0-9]+") || lines[3].matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
-								event.setCancelled(true);
-								break;
-							}
-						}
-					}
-				}
-			}
-	}
-}
