@@ -22,10 +22,10 @@ public class Config {
 	/**
 	 * 
 	 * @param configName ロードするConfigの名前
-	 * @param plugin JavaPlugin
+	 * @param plugins JavaPlugin
 	 */
-	public Config(String configName, ItemTradeChest plugin) {
-		this.plugin = plugin;
+	public Config(String configName, ItemTradeChest plugins) {
+		this.plugin = plugins;
 		this.confName = configName;
 		//configのパスを取得
 		this.confDir = plugin.getDataFolder();

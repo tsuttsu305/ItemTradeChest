@@ -1,1 +1,10 @@
 language: ja-jp
+shop:
+  line1: [shop]
+  
+protection:
+  explosion: true
+  player: true
+  piston: true
+  burn: true
+  

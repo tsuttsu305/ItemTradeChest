@@ -22,6 +22,7 @@ public class ProtectShop implements Listener {
 
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onExplode(EntityExplodeEvent event){
+		if (itc.getProtection("explosion") == false) return;
 		for (Block block : event.blockList()){
 			if (isProtectSign(block)){
 				event.setCancelled(true);
@@ -39,6 +40,7 @@ public class ProtectShop implements Listener {
 
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerBreak(BlockBreakEvent event){
+		if (itc.getProtection("player") == false) return;
 		Block block = event.getBlock();
 		if (isProtectSign(block)){
 			if (!(event.getPlayer().equals(itc.getServer().getPlayer(((Sign)block.getState()).getLine(1))))){
@@ -59,6 +61,7 @@ public class ProtectShop implements Listener {
 	}
 		@EventHandler(priority=EventPriority.HIGHEST)
 		public void onPistonEx(BlockPistonExtendEvent event){
+			if (itc.getProtection("piston") == false) return;
 			for (Block block : event.getBlocks()){
 				Block[] blockArea = getBlockArea(block);
 				for (int i =0; i <= 3;i++){
@@ -71,6 +74,7 @@ public class ProtectShop implements Listener {
 		}
 		@EventHandler(priority=EventPriority.HIGHEST)
 		public void onPistonEx(BlockPistonRetractEvent event){
+			if (itc.getProtection("piston") == false) return;
 			Block block = event.getRetractLocation().getBlock();
 			Block[] blockArea = getBlockArea(block);
 			for (int i =0; i <= 3;i++){
@@ -82,7 +86,8 @@ public class ProtectShop implements Listener {
 		}
 
 		@EventHandler(priority=EventPriority.HIGHEST)
-		public void onPistonEx(BlockBurnEvent event){
+		public void onBlockBurn(BlockBurnEvent event){
+			if (itc.getProtection("burn") == false) return;
 			Block block = event.getBlock();
 			Block[] blockArea = getBlockArea(block);
 			for (int i =0; i <= 3;i++){

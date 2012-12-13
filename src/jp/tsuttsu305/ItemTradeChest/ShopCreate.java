@@ -14,6 +14,11 @@ import org.bukkit.event.block.SignChangeEvent;
 
 
 public class ShopCreate implements Listener {
+	private ItemTradeChest itemTradeChest = null;
+
+	public ShopCreate(ItemTradeChest itemTradeChest) {
+		this.itemTradeChest =  itemTradeChest;
+	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onSignChange(SignChangeEvent event){
@@ -31,13 +36,13 @@ public class ShopCreate implements Listener {
 		//看板の下がChest以外の場合は処理を行わない
 		if (!chest.getType().equals(Material.CHEST)) return;
 		//1行めが[shop]以外は無視
-		if (!signLines[0].equalsIgnoreCase("[shop]")) return;
+		if (!signLines[0].equalsIgnoreCase(itemTradeChest.getLine1())) return;
 
 		//Locketteロック判定 - 所有者ではない場合は1行目にエラーを返す
 		if (ItemTradeChest.Lockette){
 			if (CheckLockette.isCheckBlock(chest, player) == false){
 				event.setLine(0, ChatColor.RED + "" +  ChatColor.ITALIC + "--Error!--");
-				player.sendMessage(ChatColor.RED + "[Shop]他人のチェストをShopにすることはできません!");
+				player.sendMessage(ChatColor.RED + "[Shop] " + itemTradeChest.getMsg("notPlayerChest"));
 				return;
 			}
 		}
@@ -70,7 +75,7 @@ public class ShopCreate implements Listener {
 			try {
 				outName = Material.getMaterial(Integer.parseInt(line[0])).toString();
 			} catch (Exception e) {
-				pl.sendMessage(ChatColor.RED + "[Shop] そのアイテムIDは存在しません!");
+				pl.sendMessage(ChatColor.RED + "[Shop] " + itemTradeChest.getMsg("notFoundID"));
 				outName = "Error";
 			}
 			if (lines[lineN].matches("[0-9]+:[0-9]+")){

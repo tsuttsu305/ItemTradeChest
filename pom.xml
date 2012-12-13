@@ -22,7 +22,8 @@
           <source/>
           <target/>
           <file>src/plugin.yml</file>
-          <!--  <file>src/config.yml</file>-->
+          <file>src/config.yml</file>
+          <file>src/ja-jp.yml</file>
         </configuration>
       </plugin>
     </plugins>

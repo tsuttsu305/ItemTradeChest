@@ -55,12 +55,14 @@ public class PlayerUseShop implements Listener {
 		if (!chest.getType().equals(Material.CHEST)) return;
 		
 		//1行めが[shop]以外は無視
-		if (!(signLines[0].equalsIgnoreCase("[shop]"))) return;
+		if (!(signLines[0].equalsIgnoreCase(ttc.getLine1()))) return;
 		Player player = event.getPlayer();
 		//Shop作成者が本当にチェスト持ち主かを再確認
 		if (ItemTradeChest.Lockette){
-			if (CheckLockette.isCheckBlock(chest, ttc.getServer().getPlayer(signLines[1])) == false){
-				player.sendMessage(ChatColor.RED + "[Shop] 管理人にエラーコードと座標を報告してください! Code: 001 Loc: " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+			if (CheckLockette.isCheckBlock(chest, ttc.getServer().getPlayerExact(signLines[1])) == false){
+				String error1 = ttc.getMsg("error1");
+				error1 = error1.replaceAll("&L", player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+				player.sendMessage(ChatColor.RED + "[Shop] " + error1);
 				event.setCancelled(true);
 				return;
 			}
@@ -71,7 +73,9 @@ public class PlayerUseShop implements Listener {
 		//看板にエラーがないか確認
 		for (int i = 0;i <= 3; i++){
 			if (signLines[i].toLowerCase().matches(".*(error).*")){
-				player.sendMessage(ChatColor.RED + "[Shop] 管理人にエラーコードと座標を報告してください! Code: 002 Loc: " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+				String error2 = ttc.getMsg("error2");
+				error2 = error2.replaceAll("&L", player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+				player.sendMessage(ChatColor.RED + "[Shop] " + error2);
 				event.setCancelled(true);
 				return;
 			}
@@ -85,14 +89,14 @@ public class PlayerUseShop implements Listener {
 		//チェストの中身チェック
 		if (outItem != null){
 			if (ChestChk.countChestItem(chest, outItem) < outItem.getAmount()){
-				player.sendMessage(ChatColor.AQUA + "[Shop] 在庫切れです><");
+				player.sendMessage(ChatColor.AQUA + "[Shop] " + ttc.getMsg("noStack"));
 				return;
 			}
 		}
 		//PlayerのInventoryチェック
 		if (inItem != null){
 			if (PlayerInvChk.countPlayerInvItem(player, inItem) < inItem.getAmount()){
-				player.sendMessage(ChatColor.AQUA + "[Shop] 交換対象アイテムを持っていません(´・ω・`)");
+				player.sendMessage(ChatColor.AQUA + "[Shop] " + ttc.getMsg("notHave"));
 				return;
 			}
 		}
@@ -100,9 +104,11 @@ public class PlayerUseShop implements Listener {
 		//チェストに格納が可能かCheck
 		if (inItem != null){
 			if (!(ChestChk.chestCanAdd(chest, inItem))){
-				player.sendMessage(ChatColor.AQUA + "[Shop] チェストが満杯のため交換できません><");
-				if (ttc.getServer().getPlayer(signLines[1]).isOnline()){
-					ttc.getServer().getPlayer(signLines[1]).sendMessage(ChatColor.AQUA + "[Shop] アイテムがいっぱいです。Loc: " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+				player.sendMessage(ChatColor.AQUA + "[Shop] " + ttc.getMsg("chestFull"));
+				if (ttc.getServer().getPlayerExact(signLines[1]).isOnline()){
+					String chestFullToCreater = ttc.getMsg("chestFullToCreater");
+					chestFullToCreater = chestFullToCreater.replaceAll("&L", player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+					ttc.getServer().getPlayerExact(signLines[1]).sendMessage(ChatColor.AQUA + "[Shop] " + chestFullToCreater);
 					}
 				return;
 			}
@@ -111,7 +117,7 @@ public class PlayerUseShop implements Listener {
 		//Playerが格納可能かを確認
 		if (outItem != null){
 			if (!(PlayerInvChk.playerCanAdd(player, outItem))){
-				player.sendMessage(ChatColor.AQUA + "[Shop] 手持ちがいっぱいだ!!!! XD");
+				player.sendMessage(ChatColor.AQUA + "[Shop] " + ttc.getMsg("playerFull"));
 				return;
 			}
 		}
@@ -128,31 +134,60 @@ public class PlayerUseShop implements Listener {
 			((Chest)chest.getState()).getBlockInventory().removeItem(outItem);
 		}
 		player.updateInventory();
-		player.sendMessage(ChatColor.GREEN + "[Shop] トレードに成功しました!");
+		player.sendMessage(ChatColor.GREEN + "[Shop] " + ttc.getMsg("success"));
 		if (outItem != null && inItem != null) {
-			if (ttc.getServer().getPlayer(signLines[1]).isOnline()) {
+			if (ttc.getServer().getPlayerExact(signLines[1]).isOnline()) {
+				String successToCreater = ttc.getMsg("successToCreater");
+				successToCreater = successToCreater.replaceAll("&P", player.getName());
+				successToCreater = successToCreater.replaceAll("&I", inItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&IA", inItem.getAmount() + "");
+				successToCreater = successToCreater.replaceAll("&O", outItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&AO", outItem.getAmount() + "");
 				ttc.getServer()
-						.getPlayer(signLines[1])
+						.getPlayerExact(signLines[1])
 						.sendMessage(
-								ChatColor.GREEN + "[Shop] 交換者:"
-										+ player.getName() + " in: "
-										+ inItem.getType().toString() + "-"
-										+ inItem.getAmount() + " out: "
-										+ outItem.getType() + "-"
-										+ outItem.getAmount());
+								ChatColor.GREEN + "[Shop] " + successToCreater);
 			}
-			ttc.logger.info("[Shop] 交換者:" + player.getName() + " in: "
-					+ inItem.getType().toString() + "-" + inItem.getAmount()
-					+ " out: " + outItem.getType() + "-" + outItem.getAmount());
+			String successToServer = ttc.getMsg("successToServer");
+			successToServer = successToServer.replaceAll("&P", player.getName());
+			successToServer = successToServer.replaceAll("&I", inItem.getType().toString());
+			successToServer = successToServer.replaceAll("&IA", inItem.getAmount() + "");
+			successToServer = successToServer.replaceAll("&O", outItem.getType().toString());
+			successToServer = successToServer.replaceAll("&AO", outItem.getAmount() + "");
+			ttc.logger.info("[Shop] " + successToServer);
 		}else{
-			if (ttc.getServer().getPlayer(signLines[1]).isOnline()) {
-				ttc.getServer()
-						.getPlayer(signLines[1])
-						.sendMessage(
-								ChatColor.GREEN + "[Shop] 交換者:"
-										+ player.getName() + "NONE Shop");
+			String successToCreater = ttc.getMsg("successToCreater");
+			String successToServer = ttc.getMsg("successToServer");
+			
+			successToCreater = successToCreater.replaceAll("&P", player.getName());
+			successToServer = successToServer.replaceAll("&P", player.getName());
+			if (inItem == null){
+				successToCreater = successToCreater.replaceAll("&I", "None");
+				successToServer = successToServer.replaceAll("&I", "None");
+				successToCreater = successToCreater.replaceAll("&IA", "0");
+				successToServer = successToServer.replaceAll("&IA", "0");
+			}else{
+				successToCreater = successToCreater.replaceAll("&I", inItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&IA", inItem.getAmount() + "");
+				successToServer = successToServer.replaceAll("&I", inItem.getType().toString());
+				successToServer = successToServer.replaceAll("&IA", inItem.getAmount() + "");
 			}
-			ttc.logger.info("[Shop] 交換者:" + player.getName() + " NONE Shop");
+			
+			if (outItem == null){
+				successToCreater = successToCreater.replaceAll("&O", "None");
+				successToServer = successToServer.replaceAll("&O", "None");
+				successToCreater = successToCreater.replaceAll("&OA", "0");
+				successToServer = successToServer.replaceAll("&OA", "0");
+			}else{
+				successToCreater = successToCreater.replaceAll("&O", inItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&OA", inItem.getAmount() + "");
+				successToServer = successToServer.replaceAll("&O", inItem.getType().toString());
+				successToServer = successToServer.replaceAll("&OA", inItem.getAmount() + "");
+			}
+			if (ttc.getServer().getPlayerExact(signLines[1]).isOnline()) {
+				ttc.getServer().getPlayerExact(signLines[1]).sendMessage(ChatColor.GREEN + "[Shop] " + successToCreater);
+			}
+			ttc.logger.info("[Shop] " + successToServer);
 		}
 		return;
 	}
