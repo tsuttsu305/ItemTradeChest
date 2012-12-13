@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.tsuttsu305.ItemTradeChest</groupId>
   <artifactId>ItemTradeChest</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>ItemTradeChest</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
