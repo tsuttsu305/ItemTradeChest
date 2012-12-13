@@ -139,10 +139,10 @@ public class PlayerUseShop implements Listener {
 			if (ttc.getServer().getPlayerExact(signLines[1]).isOnline()) {
 				String successToCreater = ttc.getMsg("successToCreater");
 				successToCreater = successToCreater.replaceAll("&P", player.getName());
-				successToCreater = successToCreater.replaceAll("&I", inItem.getType().toString());
 				successToCreater = successToCreater.replaceAll("&IA", inItem.getAmount() + "");
+				successToCreater = successToCreater.replaceAll("&I", inItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&OA", outItem.getAmount() + "");
 				successToCreater = successToCreater.replaceAll("&O", outItem.getType().toString());
-				successToCreater = successToCreater.replaceAll("&AO", outItem.getAmount() + "");
 				ttc.getServer()
 						.getPlayerExact(signLines[1])
 						.sendMessage(
@@ -150,10 +150,10 @@ public class PlayerUseShop implements Listener {
 			}
 			String successToServer = ttc.getMsg("successToServer");
 			successToServer = successToServer.replaceAll("&P", player.getName());
-			successToServer = successToServer.replaceAll("&I", inItem.getType().toString());
 			successToServer = successToServer.replaceAll("&IA", inItem.getAmount() + "");
+			successToServer = successToServer.replaceAll("&I", inItem.getType().toString());
+			successToServer = successToServer.replaceAll("&OA", outItem.getAmount() + "");
 			successToServer = successToServer.replaceAll("&O", outItem.getType().toString());
-			successToServer = successToServer.replaceAll("&AO", outItem.getAmount() + "");
 			ttc.logger.info("[Shop] " + successToServer);
 		}else{
 			String successToCreater = ttc.getMsg("successToCreater");
@@ -162,27 +162,27 @@ public class PlayerUseShop implements Listener {
 			successToCreater = successToCreater.replaceAll("&P", player.getName());
 			successToServer = successToServer.replaceAll("&P", player.getName());
 			if (inItem == null){
-				successToCreater = successToCreater.replaceAll("&I", "None");
-				successToServer = successToServer.replaceAll("&I", "None");
 				successToCreater = successToCreater.replaceAll("&IA", "0");
 				successToServer = successToServer.replaceAll("&IA", "0");
+				successToCreater = successToCreater.replaceAll("&I", "None");
+				successToServer = successToServer.replaceAll("&I", "None");
 			}else{
-				successToCreater = successToCreater.replaceAll("&I", inItem.getType().toString());
 				successToCreater = successToCreater.replaceAll("&IA", inItem.getAmount() + "");
-				successToServer = successToServer.replaceAll("&I", inItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&I", inItem.getType().toString());
 				successToServer = successToServer.replaceAll("&IA", inItem.getAmount() + "");
+				successToServer = successToServer.replaceAll("&I", inItem.getType().toString());
 			}
 			
 			if (outItem == null){
-				successToCreater = successToCreater.replaceAll("&O", "None");
-				successToServer = successToServer.replaceAll("&O", "None");
 				successToCreater = successToCreater.replaceAll("&OA", "0");
 				successToServer = successToServer.replaceAll("&OA", "0");
+				successToCreater = successToCreater.replaceAll("&O", "None");
+				successToServer = successToServer.replaceAll("&O", "None");
 			}else{
-				successToCreater = successToCreater.replaceAll("&O", inItem.getType().toString());
 				successToCreater = successToCreater.replaceAll("&OA", inItem.getAmount() + "");
-				successToServer = successToServer.replaceAll("&O", inItem.getType().toString());
+				successToCreater = successToCreater.replaceAll("&O", inItem.getType().toString());
 				successToServer = successToServer.replaceAll("&OA", inItem.getAmount() + "");
+				successToServer = successToServer.replaceAll("&O", inItem.getType().toString());
 			}
 			if (ttc.getServer().getPlayerExact(signLines[1]).isOnline()) {
 				ttc.getServer().getPlayerExact(signLines[1]).sendMessage(ChatColor.GREEN + "[Shop] " + successToCreater);
