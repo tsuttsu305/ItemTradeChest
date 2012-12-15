@@ -59,7 +59,7 @@ public class PlayerUseShop implements Listener {
 		Player player = event.getPlayer();
 		//Shop作成者が本当にチェスト持ち主かを再確認
 		if (ItemTradeChest.Lockette){
-			if (CheckLockette.isCheckBlock(chest, ttc.getServer().getPlayerExact(signLines[1])) == false){
+			if (CheckLockette.isCheckBlock(chest, ttc.getServer().getPlayer(signLines[1])) == false){
 				String error1 = ttc.getMsg("error1");
 				error1 = error1.replaceAll("&L", player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
 				player.sendMessage(ChatColor.RED + "[Shop] " + error1);

@@ -33,6 +33,10 @@ public class ItemTradeChest extends JavaPlugin {
 		logger.log(Level.INFO,"[ItemTradeChest] " + msg.getConfig().getString("langChk"));
 	}
 	
+	@Override
+	public void onDisable(){
+		msg.saveConfig();
+	}
 	public String getMsg(String key){
 		return msg.getConfig().getString(key);
 	}

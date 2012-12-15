@@ -1,14 +1,13 @@
-langChk: '日本語をロードしました。'
-notPlayerChest: '他人のチェストをShopにすることはできません!'
-notFoundID: 'そのアイテムIDは存在しません!'
-error1: 'Shopの作成者とロック者が違います!管理人に報告してください! Code: 001 Loc: &L'
-error2: 'Shop看板に異常があります!管理人に報告してください! Code: 002 Loc: &L'
-noStack: '在庫切れです><'
-notHave: '交換対象アイテムを持っていません(´・ω・`)'
-chestFull: 'チェストが満杯のため交換できません><'
-chestFullToCreater: 'アイテムがいっぱいです。Loc: &L'
-playerFull: '手持ちがいっぱいだ!!!! XD'
-success: 'トレードに成功しました!'
-successToCreater: '自分の&O(&OA個)を&Pの&I(&IA個)と交換しました。'
-successToServer: 'Player: &P in: &I (&IA) out: &O (&OA)'
-
+langChk: "日本語をロードしました。"
+notPlayerChest: "他人のチェストをShopにすることはできません!"
+notFoundID: "そのアイテムIDは存在しません!"
+error1: "Shopの作成者とロック者が違います!管理人に報告してください! Code: 001 Loc: &L"
+error2: "Shop看板に異常があります!管理人に報告してください! Code: 002 Loc: &L"
+noStack: "在庫切れです><"
+notHave: "交換対象アイテムを持っていません(´・ω・`)"
+chestFull: "チェストが満杯のため交換できません><"
+chestFullToCreater: "アイテムがいっぱいです。Loc: &L"
+playerFull: "手持ちがいっぱいだ!!!! XD"
+success: "トレードに成功しました!"
+successToCreater: "自分の&O(&OA個)を&Pの&I(&IA個)と交換しました。"
+successToServer: "Player: &P in: &I (&IA) out: &O (&OA)"

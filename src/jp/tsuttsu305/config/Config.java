@@ -11,14 +11,14 @@ import jp.tsuttsu305.ItemTradeChest.ItemTradeChest;
 
 public class Config {
 	private ItemTradeChest plugin;
-	
+
 	//config関係
 	private FileConfiguration conf;
 	private File confDir;
-	
+
 	//使用するConfigの名前
 	private  String confName;
-	
+
 	/**
 	 * 
 	 * @param configName ロードするConfigの名前
@@ -30,11 +30,11 @@ public class Config {
 		//configのパスを取得
 		this.confDir = plugin.getDataFolder();
 	}
-	
+
 	public void loadConfig(){
 		//Config.ymlへのパスを取得
 		File confPath = new File(confDir, confName);
-		
+
 		//configが存在しなかった場合はjarからコピー
 		if (!(confPath.exists())){
 			plugin.saveResource(confName, false);
@@ -42,20 +42,20 @@ public class Config {
 		//configを格納
 		conf = YamlConfiguration.loadConfiguration(confPath);
 	}
-	
+
 	public FileConfiguration getConfig(){
 		if (conf == null){
 			loadConfig();
 		}
 		return conf;
 	}
-	
+
 	public void saveConfig(){
 		if (conf == null || confDir == null){
 			return;
 		}else{
 			try {
-				getConfig().save(confDir);
+				getConfig().save(confDir + "/");
 			} catch (IOException e) {
 				plugin.getLogger().log(Level.WARNING, "Cannot save " + confName + " " + e);
 			}
