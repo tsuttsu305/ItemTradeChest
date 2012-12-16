@@ -1,10 +1,10 @@
 language: ja-jp
 shop:
   line1: [shop]
-  
+
+#ChestProtection
 protection:
   explosion: true
   player: true
   piston: true
   burn: true
-  
