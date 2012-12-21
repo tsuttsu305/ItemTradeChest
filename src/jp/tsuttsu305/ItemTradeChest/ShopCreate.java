@@ -54,15 +54,16 @@ public class ShopCreate implements Listener {
 		//3行目 out:Material:数量。　書き込みはid:個数
 		//4行目 in:Material:数量 書き込みはid:数量
 		for (int i = 2; i <= 3; i++){
-				event.setLine(i, chkSign(event.getLines(), i, i-2, player));
+			event.setLine(i, chkSign(event.getLines(), i, i-2, player));
 		}
 	}
-	
+
 	/*---------------------------------------------------------------------------------------------------------*/
-	
+
 	//看板の3,4行目判定用　返り値はError判定用
 	//看板の内容, 行番号, OUTかINか, Player
-	private String chkSign(String[] lines, int lineN, int io, Player pl){
+	@SuppressWarnings("unused")
+	private String chkSign(String[] lines, int lineN, int io, Player pl) throws NumberFormatException{
 		String ios = "";
 		if (io == 0){
 			ios = "out";
@@ -79,8 +80,22 @@ public class ShopCreate implements Listener {
 				outName = "Error";
 			}
 			if (lines[lineN].matches("[0-9]+:[0-9]+")){
+				try {
+					int check = Integer.parseInt(line[1]);
+				} catch (NumberFormatException e) {
+					// TODO 自動生成された catch ブロック
+					pl.sendMessage(ChatColor.RED + "[Shop] 値が異常です!");
+					return ChatColor.RED + "--Error--";
+				}
 				lines[lineN] = ios + ":" + outName + ":" + line[1];
 			}else if (lines[lineN].matches("[0-9]+:[0-9]+:[0-9]+")){
+				try {
+					int check = Integer.parseInt(line[2]);
+				} catch (NumberFormatException e) {
+					// TODO 自動生成された catch ブロック
+					pl.sendMessage(ChatColor.RED + "[Shop] 値が異常です!");
+					return ChatColor.RED + "--Error--";
+				}
 				lines[lineN]	 = ios + ":" + outName + ":" + line[1] + ":" + line[2];
 			}else{
 				lines[lineN] = ChatColor.RED + "" +  ChatColor.ITALIC + "--Error!--";

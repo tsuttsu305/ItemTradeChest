@@ -195,7 +195,7 @@ public class PlayerUseShop implements Listener {
 
 	//in outのとこからItemStackを取得する
 	public ItemStack getItemStack(String str){
-		if (str.matches("(out:|in:)[A-Z]+:[0-9]+:[0-9]+")){
+		if (str.matches("(out:|in:)[A-Z_]+:[0-9]+:[0-9]+")){
 			String[] items = str.split(":");		// 0out : 1Material : 2拡張ID : 3個数
 			if (items[1].equalsIgnoreCase("none")){
 				return null;
@@ -210,7 +210,7 @@ public class PlayerUseShop implements Listener {
 			reItem.setAmount(count);
 
 			return reItem;
-		}else if (str.matches("(out:|in:)[A-Z]+:[0-9]+")){
+		}else if (str.matches("(out:|in:)[A-Z_]+:[0-9]+")){
 			String[] items = str.split(":");		// 0out : 1Material :  2個数
 			if (items[1].equalsIgnoreCase("none")){
 				return null;
