@@ -1,9 +1,11 @@
-package jp.tsuttsu305.ItemTradeChest;
+package net.tsuttsu305.ItemTradeChest;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import jp.tsuttsu305.config.Config;
+
+import net.tsuttsu305.ItemTradeChest.config.Config;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ItemTradeChest extends JavaPlugin {

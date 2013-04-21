@@ -1,4 +1,4 @@
-package jp.tsuttsu305.Lockette;
+package net.tsuttsu305.ItemTradeChest.Lockette;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

@@ -1,13 +1,14 @@
-package jp.tsuttsu305.config;
+package net.tsuttsu305.ItemTradeChest.config;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
+import net.tsuttsu305.ItemTradeChest.ItemTradeChest;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import jp.tsuttsu305.ItemTradeChest.ItemTradeChest;
 
 public class Config {
 	private ItemTradeChest plugin;

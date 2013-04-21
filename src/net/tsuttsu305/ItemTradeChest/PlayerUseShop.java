@@ -1,8 +1,9 @@
-package jp.tsuttsu305.ItemTradeChest;
+package net.tsuttsu305.ItemTradeChest;
 
-import jp.tsuttsu305.InvChk.ChestChk;
-import jp.tsuttsu305.InvChk.PlayerInvChk;
-import jp.tsuttsu305.Lockette.CheckLockette;
+
+import net.tsuttsu305.ItemTradeChest.InvChk.ChestChk;
+import net.tsuttsu305.ItemTradeChest.InvChk.PlayerInvChk;
+import net.tsuttsu305.ItemTradeChest.Lockette.CheckLockette;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

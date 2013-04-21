@@ -1,6 +1,7 @@
-package jp.tsuttsu305.ItemTradeChest;
+package net.tsuttsu305.ItemTradeChest;
 
-import jp.tsuttsu305.Lockette.CheckLockette;
+
+import net.tsuttsu305.ItemTradeChest.Lockette.CheckLockette;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

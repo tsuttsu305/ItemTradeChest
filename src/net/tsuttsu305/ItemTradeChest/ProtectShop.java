@@ -1,4 +1,4 @@
-package jp.tsuttsu305.ItemTradeChest;
+package net.tsuttsu305.ItemTradeChest;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

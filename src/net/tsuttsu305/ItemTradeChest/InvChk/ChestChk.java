@@ -1,4 +1,4 @@
-package jp.tsuttsu305.InvChk;
+package net.tsuttsu305.ItemTradeChest.InvChk;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
